@@ -1,0 +1,9 @@
+probe module("hv_utils").function("*").call
+{
+    printf("%s -> %s\n", indent(1), probefunc());
+//  print_backtrace();
+}
+probe module("hv_utils").function("*").return
+{
+    printf("%s <- %s\n", indent(-1), probefunc());
+}
