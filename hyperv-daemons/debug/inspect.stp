@@ -1,0 +1,37 @@
+global flag = 0;
+probe module("hv_utils").function("kvp_send_key").call
+{
+    printf("%s -> %s\n", indent(1), probefunc());
+    flag = 1;
+}
+
+probe module("hv_utils").function("kvp_send_key").return
+{
+    printf("%s <- %s\n", indent(-1), probefunc());
+    flag = 1;
+}
+
+probe module("hv_utils").function("*").call
+{
+    printf("in function : %s\n", probefunc());
+    printf("function args : %s\n", $$parms$$);
+}
+
+
+probe kernel.function("cn_netlink_send").return
+{
+    if (flag == 1) {
+        printf("%s\n", probefunc());
+        printf("seq : %d, len : %d\n", $msg->seq, $msg->len);
+        printf("data : %s\n", $$parms$$);
+        //printf("data : %s\n", (char *)$msg->data);
+    }
+}
+
+probe kernel.function("utf16s_to_utf8s").call
+{
+    printf("%s\n", probefunc());
+    printf("adapter_id : 0x%x, len : %d\n", $pwcs, $size);
+    print_backtrace();
+}
+

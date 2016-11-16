@@ -1,0 +1,10 @@
+probe module("hv_utils").function("kvp_cn_callback")
+{
+    printf("%s: %s\n\n", probefunc(), $$parms$$);
+}
+
+probe moudle("hv_utils").function("kvp_respond_to_host")
+{
+    printf("%s: %s\n\n", probefunc(), $$parms$$);
+}
+
