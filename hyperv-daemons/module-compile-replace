@@ -1,0 +1,27 @@
+yum install -y rpm-build redhat-rpm-config asciidoc hmaccalc perl-ExtUtils-Embed pesign xmlto audit-libs-devel binutils-devel elfutils-devel elfutils-libelf-devel ncurses-devel newt-devel numactl-devel pciutils-devel python-devel zlib-devel net-tools bc bison
+
+mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+
+rpm -ivh kernel-3.10.0-327.el7.src.rpm
+
+cd ~/rpmbuild
+
+rpmbuild -bp SPECS/kernel.spec
+
+cd BUILD/kernel-3.10.0-327.el7/linux-3.10.0-327.el7.centos.x86_64/
+
+modify the code accordingly
+
+make oldconfig
+make menuconfig
+make prepare
+make modules_prepare
+make M=drivers/net/hyperv
+
+
+mv /lib/modules/3.10.0-327.el7.x86_64/kernel/drivers/net/hyperv/hv_netvsc.ko ~/
+cp drivers/net/hyperv/hv_netvsc.ko /lib/modules/3.10.0-327.el7.x86_64/kernel/drivers/net/hyperv/hv_netvsc.ko
+
+modprobe -r hv_netvsc
+modprobe -f hv_netvsc
+
