@@ -1,0 +1,14 @@
+#!/usr/bin/env python
+
+import time
+
+
+def hello(fout):
+        while True:
+                fout.write(time.ctime() + " hello\n")
+                time.sleep(5)
+
+
+if __name__ == "__main__":
+        f = open("/tmp/test", "w+b")
+        hello(f)
