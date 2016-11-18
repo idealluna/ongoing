@@ -16,6 +16,8 @@ make oldconfig
 make menuconfig
 make prepare
 make modules_prepare
+
+cp /lib/modules/3.10.0-327.el7.x86_64/build/Module.symvers .
 make M=drivers/net/hyperv
 
 
