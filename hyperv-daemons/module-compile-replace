@@ -1,4 +1,4 @@
-yum install -y rpm-build redhat-rpm-config asciidoc hmaccalc perl-ExtUtils-Embed pesign xmlto audit-libs-devel binutils-devel elfutils-devel elfutils-libelf-devel ncurses-devel newt-devel numactl-devel pciutils-devel python-devel zlib-devel net-tools bc bison
+yum install -y rpm-build redhat-rpm-config asciidoc hmaccalc perl-ExtUtils-Embed pesign xmlto audit-libs-devel binutils-devel elfutils-devel elfutils-libelf-devel ncurses-devel newt-devel numactl-devel pciutils-devel python-devel zlib-devel net-tools bc bison kernel-devel-`uname -r` gcc
 
 mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 
@@ -13,7 +13,7 @@ cd BUILD/kernel-3.10.0-327.el7/linux-3.10.0-327.el7.centos.x86_64/
 modify the code accordingly
 
 make oldconfig
-make menuconfig
+make menuconfig #save the .config and then exit 
 make prepare
 make modules_prepare
 
